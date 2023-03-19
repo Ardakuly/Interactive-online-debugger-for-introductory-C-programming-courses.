@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../../Poppins/Poppins-Black.ttf') format('truetype');
+    font-weight: 400;
+  }
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.main {
+
+    height: 100vh;
+    width: 100vw;
+
+}
+
+.editor{
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: baseline;
+
+}
+
+.buttons {
+
+    background-color: black;
+    width: 70%;
+    height: 5%;
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+
+    font-family: "Poppins";
+
+}
+
+.buttons .run {
+
+    margin-left: 1rem;
+    height: 90%;
+    width: 10%;
+
+    background-color: #4CAF50; /* Green */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+
+
+}
+
+.buttons .run:hover {
+
+    background-color: green;
+    
+}
+
+
+.userInput {
+
+    height: 5%;
+    width: 70%;
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    font-family: "Poppins";
+
+
+}
+
+.userInput input {
+
+    height: 100%;
+    width: 90%;
+    border-radius: 4px;
+    outline: none;
+
+}
+
+.userInput button {
+
+    height: 100%;
+    width: 10%;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+    color: white;
+    
+
+}
+
+.userInput button:hover {
+
+    background-color: green;
+
+}
