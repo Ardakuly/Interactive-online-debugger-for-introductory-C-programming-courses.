@@ -1,19 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 import AceEditor from 'react-ace';
-import ace from 'ace-builds/src-noconflict/ace';
-import 'ace-builds/src-noconflict/ext-debugger';
 
 import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/theme-monokai';
 
-import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 import "./index.css";
 
 export function Ace() {
-
-    const editorRef = useRef(null);
 
     const [socket, setSocket] = useState(null);
 
@@ -34,11 +29,6 @@ int main() {
   std::cout << "Hello, world!" << std::endl;
   return 0;
 }`;
-
-    if (editorRef.current) {
-      const editor = editorRef.current.editor;
-      ace.require("ace/ext/debugger").init(editor);
-    }
 
      setCode(initialCode);
 
