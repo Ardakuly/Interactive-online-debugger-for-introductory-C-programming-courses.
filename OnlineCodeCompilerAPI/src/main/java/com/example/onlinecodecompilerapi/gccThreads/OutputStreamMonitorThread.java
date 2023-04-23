@@ -48,8 +48,6 @@ public class OutputStreamMonitorThread extends Thread {
 
                     String response = incomingMessageQueue.take();
 
-                    System.out.println("Number Reseived: " + response);
-
                     writer.write(response);
 
                     writer.newLine();

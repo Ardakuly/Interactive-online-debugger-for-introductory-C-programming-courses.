@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.*;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.Executors;
 public class GDBDebuggerService {
 
 
-    public void debug (WebSocketSession session, String code) {
+    public void debug (WebSocketSession session, BlockingQueue<String> incomingMessageQueue, String code) {
 
         try {
 
@@ -47,7 +48,7 @@ public class GDBDebuggerService {
 
                 DebugOutputMonitorThread outputThread = new DebugOutputMonitorThread(session, process);
 
-                DebugInputSenderThread inputThread = new DebugInputSenderThread(session, process);
+                DebugInputSenderThread inputThread = new DebugInputSenderThread(session, incomingMessageQueue, process);
 
                 executorService.execute(outputThread);
 
@@ -73,7 +74,7 @@ public class GDBDebuggerService {
                                                   BufferedWriter gdbInput,
                                                   BufferedReader gdbReader) throws IOException {
 
-        gdbReader.readLine();
+        gdbReader.readLine(); // skip "Reading symbols from compiled...done." output from GDB
 
         gdbInput.write("define n\n" +
                 "    set logging file /dev/null\n" +
@@ -85,6 +86,8 @@ public class GDBDebuggerService {
                 "end\n");
 
         gdbInput.flush();
+
+        for (int i = 1; i <= 2; i++) gdbReader.readLine(); // skip 2 lines of output from GDB
 
         gdbInput.write("start\n");
 

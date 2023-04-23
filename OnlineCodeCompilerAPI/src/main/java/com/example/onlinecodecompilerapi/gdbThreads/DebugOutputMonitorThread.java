@@ -3,7 +3,6 @@ package com.example.onlinecodecompilerapi.gdbThreads;
 import com.example.onlinecodecompilerapi.helpers.Parser;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import javafx.util.Pair;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -48,10 +47,11 @@ public class DebugOutputMonitorThread extends Thread{
                     System.out.println(line);
 
                     if (Character.isDigit(line.charAt(0))) {
-                        // create user Input
+
                         session.sendMessage(new TextMessage(line));
                         isLineOutput = true;
                         break;
+
                     }
 
                     String[] lineArray = line.split("=");
