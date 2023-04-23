@@ -46,9 +46,6 @@ public class GCCCompilerService {
                 executorService.execute(userInputAndResult);
                 executorService.execute(errors);
 
-                System.out.println(process.isAlive());
-
-
                 executorService.shutdown();
 
             }

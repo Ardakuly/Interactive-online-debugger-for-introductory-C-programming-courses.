@@ -1,13 +1,11 @@
 package com.example.onlinecodecompilerapi.service;
 
+import com.example.onlinecodecompilerapi.gdbThreads.DebugInputSenderThread;
 import com.example.onlinecodecompilerapi.gdbThreads.DebugOutputMonitorThread;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,21 +31,33 @@ public class GDBDebuggerService {
 
             int execCode = process.waitFor();
 
-
             //------------------- Run Code -------------------//
 
             if (execCode == 0) {
 
-                process = Runtime.getRuntime().exec("gdb compiled");
+                process = Runtime.getRuntime().exec("gdb -q compiled");
 
-                // put breakpoints from users
+                BufferedWriter gdbInput = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                BufferedReader gdbReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+                //how to execute "start" command on GDB
+                executeAdditionalCommands(process, gdbInput, gdbReader);
 
                 ExecutorService executorService = Executors.newFixedThreadPool(2);
 
-                executorService.execute(new DebugOutputMonitorThread(session, process));
+                DebugOutputMonitorThread outputThread = new DebugOutputMonitorThread(session, process);
 
+                DebugInputSenderThread inputThread = new DebugInputSenderThread(session, process);
 
+                executorService.execute(outputThread);
 
+                executorService.execute(inputThread);
+
+                executorService.shutdown();
+
+                gdbInput.write("q\n");
+
+                gdbInput.write("y\n");
 
             }
 
@@ -59,4 +69,30 @@ public class GDBDebuggerService {
 
     }
 
+    private static void executeAdditionalCommands(Process process,
+                                                  BufferedWriter gdbInput,
+                                                  BufferedReader gdbReader) throws IOException {
+
+        gdbReader.readLine();
+
+        gdbInput.write("define n\n" +
+                "    set logging file /dev/null\n" +
+                "    set logging redirect on\n" +
+                "    set logging on\n" +
+                "    next\n" +
+                "    set logging off\n" +
+                "    display\n" +
+                "end\n");
+
+        gdbInput.flush();
+
+        gdbInput.write("start\n");
+
+        gdbInput.flush();
+
+        for (int i = 1; i <= 4; i++) gdbReader.readLine(); // to skip 4 lines of output
+
+    }
+
 }
+
