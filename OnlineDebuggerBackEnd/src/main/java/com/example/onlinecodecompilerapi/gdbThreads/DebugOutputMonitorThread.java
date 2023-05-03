@@ -52,13 +52,9 @@ public class DebugOutputMonitorThread extends Thread{
                 	if (ch == '\n' || ch == '\r') break;
                 	
                 	builder.append((char) ch);
-                	
-                	System.out.println("Constructin line: " + builder.toString() + " size: " + builder.length());
-                	
+
                 	if (builder.toString().startsWith("(gdb) @(gdb)")) {
-                		
-                		System.out.println("Check:" + builder.toString().substring(12, builder.length()) + "Check");
-         
+
                 		String newBuilder = builder.toString().substring(12, builder.length()).trim();
                 		
                 		builder.setLength(0);
@@ -67,9 +63,7 @@ public class DebugOutputMonitorThread extends Thread{
                 	}
                                 	
                 	if (ch == '}') {
-                		
-                		System.out.println(" } encountered in line:" + builder.toString() + " size: " + builder.length());
-                		
+
                 		String temp = builder.toString().trim();
                 		
                 		builder.setLength(0);
@@ -84,9 +78,7 @@ public class DebugOutputMonitorThread extends Thread{
                 			lineNumber.append(builder.charAt(index));
                 			index++;
                 		}
-                		
-                		System.out.println(lineNumber.toString() + " == " + (Integer.toString(lastLine)));
-                		
+
                 		if (lineNumber.toString().equals(Integer.toString(lastLine))) {
                 			isLastLine = true;
                 			break;
@@ -110,11 +102,7 @@ public class DebugOutputMonitorThread extends Thread{
                 
                 if (line.startsWith("@(gdb)")) {
                 	line = line.substring(6, line.length()).trim();
-                } 
-                
-                System.out.println("Line at 43: " + line); 
-                                
-                System.out.println("We are heeeeeerrrreeeee in DebugOutputMonitorThread");
+                }
 
                 if (line.length() > 0) {
                   
@@ -124,17 +112,11 @@ public class DebugOutputMonitorThread extends Thread{
                 	}
 
                     session.sendMessage(new TextMessage(line));
-                                        
-                    System.out.println("Line started with number !!! ");
-                    
-                  
                 }
                 
                 
                 if (line.length() > 0 && !isLastLine) {
-                	
-                	System.out.println("Last line: " + line);
-                	
+
                 	writer.write("info locals\n");
                     
                     writer.flush();
@@ -157,17 +139,6 @@ public class DebugOutputMonitorThread extends Thread{
 	                		 
 	                		 if (character == '\r') continue;
 	                		 
-//	                		 if (character == '@') {
-//	                			 
-//	                			 int temp;
-//	                			 
-//	                			 while ((temp = reader.read()) != -1) {
-//	                				 System.out.print((char)temp + "")
-//	                				 
-//	                			 }
-//	                			 
-//	                		 }
-	                		 
 	                		 if (character == '@'|| character == '\n' || character == '\t') break;
 	                		 
 	                		 lineLocalVariable.append((char) character);
@@ -175,9 +146,7 @@ public class DebugOutputMonitorThread extends Thread{
 	                	 }
 	                	 
 	                	 String infoLocal = lineLocalVariable.toString();
-	                	 
-	                	 System.out.println("info locals: " + infoLocal + " and size: " + infoLocal.length());
-	                	 
+
 	                	 if (infoLocal.startsWith("(gdb)")) {
 	                		 infoLocal = infoLocal.substring(5, infoLocal.length()).trim();
 	                     } 
@@ -193,25 +162,17 @@ public class DebugOutputMonitorThread extends Thread{
 	                     } else {
 	                    	 
 	                    	 String[] infoLocalArray = infoLocal.split("=");
-	                    	 
-	                    	 for (String str : infoLocalArray) {
-	                    		 System.out.print(str + " ");
-	                    	 }
 	                     	
 	                         rawValues.put(infoLocalArray[0].trim(), infoLocalArray[1].trim());	                     	
 	                    	 
 	                     }
-	                	 
-	                	// iteration++;
-                    	
+
                     }
                     
                 	
                 }
 
                 if (line.length() > 0 && infoLocalsExist && !isLastLine) {
-                	
-                	System.out.println("If line is empty we must not be here !!!");
 
                     for (Map.Entry<String, String> rawValue : rawValues.entrySet()) {
 

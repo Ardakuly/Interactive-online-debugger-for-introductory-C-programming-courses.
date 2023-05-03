@@ -75,8 +75,6 @@ int main() {
 
         setOutput(prevOutput => prevOutput.length > 0 ? `${prevOutput}\n${data}` : data);
 
-        console.log(output);
-
       }
 
       connectionCompile.onerror = (event) => {
@@ -84,8 +82,6 @@ int main() {
         console.log(event.target);
 
       }
-
-      /* HEEEEREEEE WEEEE HAVEEEE DEBUUUUUUUUGGGG SOCKET */
 
       connectionDebug.onopen = () => {
 
@@ -111,7 +107,6 @@ int main() {
         }
         
         if (data.includes("(User Input): ")) {
-          //make button active
           setIsDisabled(false);
           setActiveProcess("D")
 
@@ -122,10 +117,7 @@ int main() {
 
         } 
 
-        console.log("Data came");
-        console.log("Starts with: " + data.charAt(0) + " Ends with: " + data.charAt(data.length - 1));
 
-        // setOutput(prevOutput => prevOutput.length > 0 ? `${prevOutput}\n${data}` : data);
         if (/^\d/.test(data)) {
 
           setDebugData(prevDebugData => ({
@@ -137,30 +129,21 @@ int main() {
 
         if (data.startsWith("[") && data.endsWith("]")) {
 
-          console.log("Values came for rendering");
           const perVariable = data.split("\n");
 
           let variables = [];
 
           for (let variable of perVariable) {
 
-            console.log("Per Unit Variable: "  + variable);
-
             variable = variable.substring(1, variable.length - 1);
 
-            console.log(variable);
-
             const perUnitVariable = variable.split("|");
-
-            console.log(perUnitVariable);
 
             let variableObject = {
               name: perUnitVariable[0],
               type: perUnitVariable[1],
               value: perUnitVariable[2]
             }
-
-            console.log(variableObject);
 
             variables.push(variableObject);
 
@@ -172,8 +155,6 @@ int main() {
           }))
 
         }
-        // console.log(output);
-
       }
 
       connectionDebug.onerror = (event) => {
@@ -208,8 +189,6 @@ int main() {
 
     const handleDebugCode = () => {
 
-      console.log("Debug button is triggered!");
-
       if (socketDebug && socketDebug.readyState === WebSocket.OPEN) {
         socketDebug.send(code);
         setOutput("");
@@ -221,11 +200,9 @@ int main() {
 
       if (socketCompile && socketCompile.readyState === WebSocket.OPEN && activeProcess == "R") {
 
-        console.log("HERE WE ARE SENDING DATA to Compiler");
         socketCompile.send(userInput);
         setIsDisabled(true);
       } else if (socketDebug && socketDebug.readyState === WebSocket.OPEN && activeProcess == "D") {
-        console.log("HERE WE ARE SENDING DATA to Debugger");
         socketDebug.send(userInput);
         setIsDisabled(true);
       }
@@ -287,27 +264,5 @@ int main() {
       </div>
     );
 }
-
-
-// const handleCompile = async () => {
-
-//   console.log(code);
-
-//   try {
-//     const response = await fetch("http://localhost:8080/nu/v1/editor/compile", {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'text/plain'
-//       },
-//       body: code
-//     });
-
-//     const resultText = await response.text();
-//     setOutput(resultText);
-//   //   setOutput(await response.json());
-//   } catch (error) {
-//     setOutput(error.message);
-//   }
-// };
 
 

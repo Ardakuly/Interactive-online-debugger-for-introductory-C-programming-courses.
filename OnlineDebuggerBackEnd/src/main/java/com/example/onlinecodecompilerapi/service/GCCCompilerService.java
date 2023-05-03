@@ -58,7 +58,3 @@ public class GCCCompilerService {
     }
 
 }
-
-
-//process = Runtime.getRuntime().exec("./compiled");
-// System.out.println("Here we are ----->");

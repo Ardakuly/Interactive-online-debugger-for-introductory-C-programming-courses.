@@ -34,18 +34,11 @@ public class DebugInputSenderThread extends Thread {
 
             	while(process.isAlive()) {
             		
-            		System.out.println("Here in DebugInputSenderThread !!! ");
-             		System.out.println("Size of steps: " + stepForwardMessage.size());
-            		
             		String temp = stepForwardMessage.take();
 
             		writer.write("step\n");
                     
                     writer.flush();
-                    
-                    System.out.println("DebugInputSenderThread catched step command: " + temp);
-                    
-                    
             		
             	}
                 

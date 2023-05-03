@@ -35,17 +35,11 @@ public class GDBDebugger extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
         String[] lines = message.getPayload().split("\r\n|\r|\n");
-        
-        System.out.println("Line: " + lines[0]);
-        
+
         if (lines.length > 1) {
 
-        	System.out.println("Code for debugging has come");
-        	
         	int lastLine = lines.length;
-        	
-        	System.out.println("Last Line: " + lastLine);
-        	
+
             this.gdbDebuggerService.debug(session, userInputMessage, stepForwardMessage, message.toString(),  lastLine);
 
         } else {
@@ -53,9 +47,7 @@ public class GDBDebugger extends TextWebSocketHandler {
             if (lines[0].equals("[*]")) {
             	
             	stepForwardMessage.add(message.getPayload());
-            	
-            	System.out.println("Size: " + stepForwardMessage.size());
-            	
+
             } else {
             	
             	 userInputMessage.add(message.getPayload());

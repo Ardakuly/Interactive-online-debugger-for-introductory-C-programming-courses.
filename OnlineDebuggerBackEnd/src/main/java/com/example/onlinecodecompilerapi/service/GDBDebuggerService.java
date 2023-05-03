@@ -29,12 +29,8 @@ public class GDBDebuggerService {
             //------------------- Compile Code -------------------//
 
             Process process = Runtime.getRuntime().exec("g++ -g C:\\Users\\Professional\\Desktop\\main.cpp -o  C:\\Users\\Professional\\Desktop\\compiledDebug");
-            
-            System.out.println("Code for debugging is compiled!!!");
 
             int execCode = process.waitFor();
-            
-            System.out.println("Autcome of process: " + execCode);
 
             //------------------- Run Code -------------------//
 
@@ -49,10 +45,6 @@ public class GDBDebuggerService {
 
                 //how to execute "start" command on GDB
                 executeAdditionalCommands(process, gdbInput, gdbReader);
-                
-                System.out.println("ExecutonAdditionalCommands is done");
-                
-                System.out.println("Size of steps in service: " + stepForwardMessage.size());
 
                 ExecutorService executorService = Executors.newFixedThreadPool(2);
 
@@ -60,16 +52,11 @@ public class GDBDebuggerService {
 
                 DebugOutputMonitorThread outputThread = new DebugOutputMonitorThread(inputThread, session, process, gdbReader, gdbInput, lastLine);
                 
-                
                 executorService.execute(outputThread);
 
                 executorService.execute(inputThread);
-                
-                
-                System.out.println("Executon of Threads are done");
-                
-                executorService.shutdown();
 
+                executorService.shutdown();
 
             }
 
@@ -86,18 +73,8 @@ public class GDBDebuggerService {
                                                   BufferedReader gdbReader) throws IOException {
     	
     	
-        System.out.println(gdbReader.readLine()); // skip "Reading symbols from compiled...done." output from GDB
+        gdbReader.readLine(); // skip "Reading symbols from compiled...done." output from GDB
 
-//        gdbInput.write("define n\n" +
-//                "    set logging file /dev/null\n" +
-//                "    set logging redirect on\n" +
-//                "    set logging on\n" +
-//                "    next\n" +
-//                "    set logging off\n" +
-//                "    display\n" +
-//                "end\n");
-
-//        gdbInput.flush();
         gdbInput.write("set print thread-events off\n");
         
         gdbInput.flush();
