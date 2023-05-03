@@ -14,7 +14,9 @@
       Backend: Java, SpringCore, SpringBoot, WebSocketAPI
       Frontend: JS, React.js, ACE code editor.
 
- Used CS concepts: OOP, Concurrency(MultiThreading), WebSocket Protocol, Data Structures -> HashMap, Conccurrent Queues.
+ Used CS concepts: OOP, Concurrency(MultiThreading), WebSocket Protocol, Process, I/O streams, Data Structures -> HashMap, Conccurrent Queues.
+
+ Used tools: GCC compiler, GDB compiler
  
  
       
