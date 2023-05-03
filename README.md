@@ -16,7 +16,7 @@
 
  Used CS concepts: OOP, Concurrency(MultiThreading), WebSocket Protocol, Process, I/O streams, Data Structures -> HashMap, Conccurrent Queues.
 
- Used tools: GCC compiler, GDB compiler
+ Used tools: GCC compiler, GDB debugger
  
  
       
