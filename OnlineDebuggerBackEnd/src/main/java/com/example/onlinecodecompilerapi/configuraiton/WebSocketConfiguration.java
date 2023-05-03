@@ -24,7 +24,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(gccCompiler, "/nu/editor/compile").setAllowedOrigins("*");
-        registry.addHandler(gdbDebugger, "nu/editor/debug").setAllowedOrigins("*");
+        registry.addHandler(gdbDebugger, "/nu/editor/debug").setAllowedOrigins("*");
     }
 
 }

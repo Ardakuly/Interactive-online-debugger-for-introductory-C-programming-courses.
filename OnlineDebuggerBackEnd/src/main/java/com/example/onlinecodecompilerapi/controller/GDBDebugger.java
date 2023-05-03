@@ -15,17 +15,19 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class GDBDebugger extends TextWebSocketHandler {
 
     private GDBDebuggerService gdbDebuggerService;
-    private BlockingQueue<String> incomingMessageQueue;
+    private BlockingQueue<String> userInputMessage;
+    private BlockingQueue<String> stepForwardMessage;
 
     public GDBDebugger(GDBDebuggerService gdbDebuggerService) {
         this.gdbDebuggerService = gdbDebuggerService;
-        this.incomingMessageQueue = new LinkedBlockingQueue<>();
+        this.userInputMessage = new LinkedBlockingQueue<>();
+        this.stepForwardMessage = new LinkedBlockingQueue<>();
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
-        System.out.println("Web Socket is established .......");
+        System.out.println("Web Socket for Debug is established .......");
 
     }
 
@@ -33,14 +35,32 @@ public class GDBDebugger extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
         String[] lines = message.getPayload().split("\r\n|\r|\n");
-
+        
+        System.out.println("Line: " + lines[0]);
+        
         if (lines.length > 1) {
 
-            this.gdbDebuggerService.debug(session, incomingMessageQueue, message.toString());
+        	System.out.println("Code for debugging has come");
+        	
+        	int lastLine = lines.length;
+        	
+        	System.out.println("Last Line: " + lastLine);
+        	
+            this.gdbDebuggerService.debug(session, userInputMessage, stepForwardMessage, message.toString(),  lastLine);
 
         } else {
             
-            incomingMessageQueue.add(message.getPayload());
+            if (lines[0].equals("[*]")) {
+            	
+            	stepForwardMessage.add(message.getPayload());
+            	
+            	System.out.println("Size: " + stepForwardMessage.size());
+            	
+            } else {
+            	
+            	 userInputMessage.add(message.getPayload());
+            	
+            }
 
         }
 
@@ -50,6 +70,9 @@ public class GDBDebugger extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    	
+    	this.userInputMessage = null;
+    	this.stepForwardMessage = null;
     }
 
 }

@@ -36,7 +36,7 @@ public class OutputStreamMonitorThread extends Thread {
 
             String line = "";
 
-            System.out.println("Start working");
+            System.out.println("Reading Line: " + line);
 
             while ((line = reader.readLine()) != null) {
 

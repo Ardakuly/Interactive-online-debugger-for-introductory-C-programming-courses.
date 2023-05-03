@@ -1,0 +1,165 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../../Poppins/Poppins-Black.ttf') format('truetype');
+    font-weight: 400;
+  }
+
+.debugger-area {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 91%;
+    background-color: white;
+    color: black;
+    font-family: 'Poppins';
+
+}
+
+.debugger-area-scope {
+
+    width: 80%;
+    height: 5%;
+    border: 3px solid black;
+    border-radius: 0.5rem;
+
+    
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+
+    padding: 5px;
+
+}
+
+.debugger-area-scope p {
+    color: black;
+}
+
+.debugger-area-scope p span {
+    color: red;
+}
+
+.debugger-area-line {
+
+    width: 80%;
+    height: 5%;
+    border: 3px solid black;
+    border-radius: 0.5rem;
+    text-align: center;
+
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+
+    padding: 5px;
+
+}
+
+.debugger-area-line p {
+    color: black;
+}
+
+.debugger-area-line p span {
+    color: red;
+}
+
+.debugger-area-variables {
+
+    width: 80%;
+    height: 79%;
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    flex-wrap: wrap;
+    border: 3px solid black;
+    border-radius: 0.5rem;
+    padding: 10px;
+}
+
+.variable-arr {
+
+    width: 70%;
+    height: 20%;
+    border: 3px solid black;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+
+}
+
+.variable-int {
+
+    width: 45%;
+    height: 20%;
+    border: 3px solid black;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+
+}
+
+.variable-name-type {
+
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    border-radius: 0.5rem;
+
+}
+
+.variable-name-type .type{
+
+    width: 49%;
+    height: 90%;
+    background-color: red;
+    border: 3px solid black;
+    border-radius: 0.4rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.variable-name-type .name{
+
+    width: 49%;
+    height: 90%;
+    border: 3px solid black;
+    border-radius: 0.4rem;
+    background-color: blue;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.variable-value {
+
+    width: 99%;
+    height: 55%;
+    border: 3px solid black;
+    border-radius: 0.4rem;
+    background-color: green;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.variable-value p {
+    font-size: clamp(0.5rem, calc(0.8rem - 0.1vw), 1rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

@@ -18,7 +18,7 @@ public class GCCCompilerService {
 
         try {
 
-            File main = new File("main.cpp");
+            File main = new File("C:\\Users\\Professional\\Desktop\\main.cpp");
 
             BufferedWriter writeCodeToFile = new BufferedWriter(new FileWriter(main));
 
@@ -28,7 +28,7 @@ public class GCCCompilerService {
 
             //------------------- Compile Code -------------------//
 
-            Process process = Runtime.getRuntime().exec("g++ -o compiled main.cpp");
+            Process process = Runtime.getRuntime().exec("g++ -o C:\\Users\\Professional\\Desktop\\compiled C:\\Users\\Professional\\Desktop\\main.cpp");
 
             int execCode = process.waitFor();
 
@@ -37,7 +37,7 @@ public class GCCCompilerService {
 
             if (execCode == 0) {
 
-                process = Runtime.getRuntime().exec("./compiled");
+                process = Runtime.getRuntime().exec("C:\\Users\\Professional\\Desktop\\compiled");
 
                 ExecutorService executorService = Executors.newFixedThreadPool(2);
                 OutputStreamMonitorThread userInputAndResult = new OutputStreamMonitorThread(session, process, incomingMessageQueue);

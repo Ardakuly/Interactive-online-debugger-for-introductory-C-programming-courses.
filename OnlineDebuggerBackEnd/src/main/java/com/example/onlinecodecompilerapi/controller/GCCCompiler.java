@@ -24,7 +24,7 @@ public class GCCCompiler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
-        System.out.println("Web Socket is established .......");
+        System.out.println("Web Socket for Compile is established .......");
 
     }
 

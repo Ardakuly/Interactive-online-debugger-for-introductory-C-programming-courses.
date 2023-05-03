@@ -8,7 +8,7 @@ import { Ace } from './Ace';
 
 function App() {
   return (
-    <div>
+    <div className='screen'>
       <Header />
       <Ace />
     </div>
